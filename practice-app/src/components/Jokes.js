@@ -6,7 +6,7 @@ function Jokes(props) {
       <h1>
         {props.question}
       </h1>
-      <h2>
+      <h2 style={{color: !props.question && "red"}}>
         {props.punchLine}
       </h2>
     </div>
