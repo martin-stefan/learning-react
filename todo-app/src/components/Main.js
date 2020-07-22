@@ -6,8 +6,7 @@ function Main() {
 
   const todoComp = todosData.map(todo => <TodoItem 
     key={todo.id} 
-    text={todo.text} 
-    completed={todo.completed} />
+    todo={todo} />
   );
 
 
