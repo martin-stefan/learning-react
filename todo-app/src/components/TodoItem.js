@@ -5,11 +5,11 @@ function TodoItem(props) {
     <div className="todoItem">
       <input 
         type="checkbox" 
-        checked={props.todo.completed} 
-        name={props.todo.id} 
-        onChange={() => console.log("changed")}
+        checked={props.item.completed} 
+        name={props.item.id} 
+        onChange={() => props.handleChange(props.item.id)}
       />
-      <label for={props.todo.id}>{props.todo.text}</label>
+      <label for={props.item.id}>{props.item.text}</label>
       <br></br>
     </div>
   );
