@@ -9,11 +9,31 @@ class Main extends React.Component {
     this.state = {
       todoComp: todosData
     }
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(id) {
+    this.setState(prevState => {
+      const updated = prevState.todoComp.map(todo => {
+        if (todo.id === id) {
+          todo.completed = !todo.completed;
+        }
+        return todo
+      })
+      return {
+        todos: updated
+      }
+    })
   }
   
   
   render() {
-    const todoComp = this.state.todoComp.map(todo => <TodoItem key={todo.id} todo={todo} />);
+    const todoComp = this.state.todoComp.map(item => 
+    <TodoItem 
+    key={item.id} 
+    item={item} 
+    handleChange = {this.handleChange}
+    />);
 
     return (
       <div>
