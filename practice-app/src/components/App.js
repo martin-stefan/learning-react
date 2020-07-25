@@ -119,34 +119,214 @@ import jokesData from '../jokeData';
 // }
 
 
+// class App extends React.Component {
+//   constructor() {
+//     super()
+//     this.state = {
+//       isLoading: false, 
+//       character: {}
+//     }
+//   }
+
+//   componentDidMount() {
+//     this.setState({isLoading: true})
+//     fetch("https://swapi.dev/api/people/1")
+//       .then(response => response.json())
+//       .then(data => {
+//         this.setState({
+//           isLoading: false, 
+//           character: data
+//         })
+//       })
+//   }
+
+//   render() {
+//     const text = this.state.isLoading ? "loading..." : this.state.character.name
+//     return (
+//       <div>
+//         <h1>{text}</h1>
+//       </div>
+//     )
+//   }
+// }
+
+// class App extends React.Component {
+//   constructor() {
+//     super()
+//     this.state = {
+//       firstName: "",
+//       lastName: "",
+//       isFriendly: true,
+//       gender: "",
+//       favColor: "blue"
+//     }
+
+//     this.handleChange = this.handleChange.bind(this)
+//   }
+
+//   handleChange(event) {
+//     const {name, value, type, checked} = event.target
+//     event.target.type ==="checkbox" ? this.setState({[name]: checked}) :
+//     this.setState({
+//       [name]: value
+//     })
+//   }
+
+//   render() {
+//     return (
+//       <form>
+//         <input 
+//           type="text"
+//           value={this.state.firstName}
+//           name="firstName" 
+//           placeholder="First name"
+//           onChange={this.handleChange}
+//         />
+//         <br />
+//         <input
+//           type="text"
+//           value={this.state.lastName}
+//           name="lastName"
+//           placeholder="Last Name"
+//           onChange={this.handleChange}
+//         />
+
+//         <h1>{this.state.firstName} {this.state.lastName}</h1>
+       
+//         <textarea 
+//           value={"Some default value"} 
+//           onChange={this.handleChange}
+//         />
+//         <br />
+
+//         <label>
+//           <input 
+//             type="checkbox" 
+//             name="isFriendly"
+//             checked={this.state.isFriendly}
+//             onChange={this.handleChange}
+//           /> Are you friendly
+//         </label>
+
+//         <br />
+
+//         <label>
+//           <input 
+//             type="radio" 
+//             name="gender"
+//             value="male"
+//             checked={this.state.gender === "male"}
+//             onChange={this.handleChange}
+//           /> Male
+//         </label>
+
+
+//         <label>
+//           <input 
+//             type="radio" 
+//             name="gender"
+//             value="female"
+//             checked={this.state.gender === "female"}
+//             onChange={this.handleChange}
+//           /> Female
+//         </label>
+
+//         <br />
+
+//         <select 
+//           value={this.state.favColor}
+//           onChange={this.handleChange}
+//           name="favColor">
+          
+//           <option value="blue">Blue</option>
+//           <option value="red">Red</option>
+//           <option value="green">Green</option>
+//         </select>
+
+//         <br />
+
+//         <button>
+//           Submit
+//         </button>
+//       </form>
+//     )
+//   }
+// }
+
+
 class App extends React.Component {
   constructor() {
-    super()
-    this.state = {
-      isLoading: false, 
-      character: {}
-    }
+      super()
+      this.state = {
+        firstName: "",
+        lastName: "",
+        age: "",
+        gender: ""
+      }
+
+      this.handleChange = this.handleChange.bind(this)
   }
 
-  componentDidMount() {
-    this.setState({isLoading: true})
-    fetch("https://swapi.dev/api/people/1")
-      .then(response => response.json())
-      .then(data => {
-        this.setState({
-          isLoading: false, 
-          character: data
-        })
-      })
+  handleChange(event) {
+    const {name, value, type, checked} = event.target
+    this.setState({
+      [name]: value
+    })
   }
-
+  
   render() {
-    const text = this.state.isLoading ? "loading..." : this.state.character.name
-    return (
-      <div>
-        <h1>{text}</h1>
-      </div>
-    )
+      return (
+          <main>
+              <form>
+                  <input 
+                    placeholder="First Name" 
+                    name="firstName"
+                    value={this.state.firstName}
+                    onChange={this.handleChange}
+                  />
+                  <br />
+                  <input 
+                    placeholder="Last Name"
+                    name="lastName"
+                    value={this.state.lastName} 
+                    onChange={this.handleChange}
+
+                  />
+                    
+                  <br />
+                  <input 
+                    placeholder="Age" 
+                    name="age"
+                    value={this.state.age}
+                    onChange={this.handleChange}
+
+                  />
+                  <br />
+                  
+                  {/* Create radio buttons for gender here */}
+                  <br />
+                  
+                  {/* Create select box for location here */}
+                  <br />
+                  
+                  {/* Create check boxes for dietary restrictions here */}
+                  <br />
+                  
+                  <button>Submit</button>
+              </form>
+              <hr />
+              <h2>Entered information:</h2>
+              <p>Your name: {this.state.firstName} {this.state.lastName}</p>
+              <p>Your age: {this.state.age}</p>
+              <p>Your gender: {/* Gender here */}</p>
+              <p>Your destination: {/* Destination here */}</p>
+              <p>
+                  Your dietary restrictions: 
+                  {/* Dietary restrictions here, comma separated */}
+              </p>
+          </main>
+      )
   }
 }
+
 export default App;
