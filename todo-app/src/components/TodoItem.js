@@ -1,8 +1,9 @@
 import React from 'react';
 
 function TodoItem(props) {
+  let classDone = props.item.completed ? "todoItem completed" : "todoItem incomplete"
   return (
-    <div className="todoItem">
+    <div className={classDone}>
       <input 
         type="checkbox" 
         checked={props.item.completed} 
