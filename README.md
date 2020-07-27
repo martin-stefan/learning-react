@@ -2,6 +2,7 @@
 im just trying to learn react
 https://reactjs.org/tutorial/tutorial.html#setup-option-2-local-development-environment
 
+
  * Other modern/advanced React features/topics to learn:
  * 
  * Official React Context API - https://reactjs.org/docs/context.html
@@ -12,3 +13,8 @@ https://reactjs.org/tutorial/tutorial.html#setup-option-2-local-development-envi
  * React Hooks - https://reactjs.org/docs/hooks-intro.html
  * React lazy, memo, and Suspense - https://reactjs.org/blog/2018/10/23/react-v-16-6.html
  */
+
+Tools to use: 
+- storybook
+- formik
+
