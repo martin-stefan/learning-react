@@ -12,6 +12,8 @@ https://reactjs.org/tutorial/tutorial.html#setup-option-2-local-development-envi
  * React Router - https://reacttraining.com/react-router/core/guides/philosophy
  * React Hooks - https://reactjs.org/docs/hooks-intro.html
  * React lazy, memo, and Suspense - https://reactjs.org/blog/2018/10/23/react-v-16-6.html
+ 
+ https://www.developerdrive.com/20-best-tools-for-react-development/
  */
 
 Tools to use: 
