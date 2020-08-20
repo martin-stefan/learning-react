@@ -1,7 +1,12 @@
 import React from 'react';
+import './Person.css';
 
-const person = ()  => {
-  return <p>hello how are you</p>
+const person = (props)  => {
+  return (
+    <div className="Person">
+      <p onClick={props.click}>my name is {props.name} and I am {props.age} years old</p>
+    </div>
+  )
 };
 
 export default person;
