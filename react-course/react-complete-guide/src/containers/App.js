@@ -6,6 +6,13 @@ import Cockpit from '../components/Cockpit/Cockpit';
 
 class App extends Component {
 
+  // constructor(props) { old syntax for what we already have
+  //   super(package); just calling state sets this automatically
+  //   this.state = {
+
+  //   }
+  // }
+
   state = {
     person: [
       {
@@ -17,6 +24,11 @@ class App extends Component {
         id: 'slkdfj',
         name: 'manu',
         age: 34
+      },
+      {
+        id: 'slkdfsfdj',
+        name: 'john',
+        age: 27
       }
     ],
     showPersons: false
@@ -69,7 +81,7 @@ class App extends Component {
       persons = 
         <Persons 
           persons={this.state.person}
-          clicked={this.togglePersonsHandler}
+          clicked={this.deletePersonHandler}
           changed={this.nameChangedHandler} />;
  
       
