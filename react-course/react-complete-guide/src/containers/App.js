@@ -6,22 +6,47 @@ import Cockpit from '../components/Cockpit/Cockpit';
 
 class App extends Component {
 
-  state = {
-    person: [
-      {
-        id: 'slkhgf',
-        name: 'Max',
-        age: 23
-      },
-      {
-        id: 'slkdfj',
-        name: 'manu',
-        age: 34
-      }
-    ],
-    showPersons: false
+  constructor(props) { //old syntax for what we already have
+    super(props); //just calling state sets this automatically
+    this.state = {
+      person: [
+        {
+          id: 'slkhgf',
+          name: 'Max',
+          age: 23
+        },
+        {
+          id: 'slkdfj',
+          name: 'manu',
+          age: 34
+        },
+        {
+          id: 'slkdfsfdj',
+          name: 'john',
+          age: 27
+        }
+      ],
+      showPersons: false
+
+    }
+    
   }
 
+  // static getDerivedStateFromProps(props, state) {
+  //   return state;
+  // }
+
+  componentDidMount() {
+    console.log('component mounted');
+  }
+
+  shouldComponentUpdate() {
+    return true;
+  }
+
+  componentDidUpdate() {
+    console.log('component updated')
+  }
 
   nameChangedHandler = (event, id) => {
 
@@ -69,11 +94,9 @@ class App extends Component {
       persons = 
         <Persons 
           persons={this.state.person}
-          clicked={this.togglePersonsHandler}
+          clicked={this.deletePersonHandler}
           changed={this.nameChangedHandler} />;
- 
-      
-    } 
+    }
 
   
     return (
@@ -82,7 +105,7 @@ class App extends Component {
         <Cockpit 
           title={this.props.title}
           showPersons={this.state.showPersons} 
-          persons={this.state.person}
+          persons={this.state.person.length}
           clicked={this.togglePersonsHandler} />
         {persons}
       </div>
