@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
+import classes from './App.module.css';
+
 
 class App extends Component {
 
@@ -60,7 +62,6 @@ class App extends Component {
   
   render() {
 
-
     let persons = null;
 
     if (this.state.showPersons) {
@@ -77,21 +78,36 @@ class App extends Component {
           })}
         </div>
       );
+      
+
     } 
 
+    const classes = [];
+
+    if (this.state.person.length <= 2) {
+      classes.push('red')
+    }
+    if (this.state.person.length <= 1) {
+      classes.push('bold');
+    }
+
     return (
+  
       <div className="App">
         <h1>Yo</h1>
-        <button onClick={this.togglePersonsHandler}>Toggle persons</button>
+        <p className={classes.join(' ')}>this is a paragraph</p>
+        <button className={classes.Button} alt={this.state.showPersons} onClick={this.togglePersonsHandler}>Toggle persons</button>
         {persons}
       </div>
+    
     );
 
   }
 
 }
 
+
+
+
+
 export default App;
-
-
-
