@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import Posts from './Posts/Posts';
 import './Blog.css';
-import { Route, NavLink, Switch } from 'react-router-dom';
+import { Route, NavLink, Switch, Redirect } from 'react-router-dom';
 import NewPost from './NewPost/NewPost';
 
 class Blog extends Component {
-
+		state = {
+			auth: true
+		}
     render () {
         
         return (
@@ -22,8 +24,11 @@ class Blog extends Component {
 								</nav>
 							</header>
 							<Switch>
-								<Route path="/new-post" component={NewPost}/>
+								{this.state.auth ? <Route path="/new-post" component={NewPost}/> : null }
 								<Route path="/posts" component={Posts}/>
+								{/* <Redirect from="/" to="/posts" /> */}
+								<Route render={() => <h1>Not found</h1>} />
+								{/* <Route path="/" component={Posts}/> */}
 							</Switch>
             </div>
         );
