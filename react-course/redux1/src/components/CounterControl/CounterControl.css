@@ -15,3 +15,8 @@
 .CounterControl:active {
     background-color: #eee;
 }
+
+.CounterControl::selection {
+    color: none;
+    background: none;
+}
