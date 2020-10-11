@@ -1,35 +1,30 @@
 const functions = require("firebase-functions");
 
-// const admin = require("firebase-admin");
-// let serviceAccount = require("../socialape-93bcf-firebase-adminsdk-90xcp-6e1d3e7e15.json");
-
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount),
-//   databaseURL: "https://socialape-93bcf.firebaseio.com"
-// });
 const admin = require('firebase-admin');
 
 admin.initializeApp({
   credential: admin.credential.applicationDefault()
 });
-// var admin = require('firebase-admin');
-// var app = admin.initializeApp();
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-exports.helloWorld = functions.https.onRequest((request, response) => {
-  response.send("Hello from Firebase!");
-});
 
-exports.getScreams = functions.https.onRequest((req, res) => {
+
+const express = require('express');
+const app = express();
+
+app.get('/screams', (req, res) => {
   admin
     .firestore()
     .collection("screams")
+    .orderBy('createdAt', 'desc')
     .get()
     .then((data) => {
       let screams = [];
       data.forEach((doc) => {
-        screams.push(doc.data());
+        screams.push({
+          screamId: doc.id,
+          body: doc.data().body,
+          userHandle: doc.data().userHandle,
+          createdAt: doc.data().createdAt
+        });
       });
       return res.json(screams);
     })
@@ -37,11 +32,11 @@ exports.getScreams = functions.https.onRequest((req, res) => {
 });
 
 
-exports.createScream = functions.https.onRequest((req, res) => {
+app.post('/scream', (req, res) => {
   const newScream = {
     body: req.body.body,
     userHandle: req.body.userHandle,
-    createdAt: admin.firestore.Timestamp.fromDate(new Date())
+    createdAt: new Date().toISOString()
   };
 
   admin.firestore()
@@ -55,3 +50,6 @@ exports.createScream = functions.https.onRequest((req, res) => {
       console.error(err);
     })
 });
+
+
+exports.api = functions.https.onRequest(app);
