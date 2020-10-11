@@ -1,20 +1,34 @@
 const functions = require("firebase-functions");
 
-const admin = require('firebase-admin');
+const admin = require("firebase-admin");
 
 admin.initializeApp({
-  credential: admin.credential.applicationDefault()
+  credential: admin.credential.applicationDefault(),
 });
 
+const firebaseConfig = {
+  apiKey: "AIzaSyAadfAUa4vXqBNEHhIifhfTKpQPhb0v83w",
+  authDomain: "socialape-93bcf.firebaseapp.com",
+  databaseURL: "https://socialape-93bcf.firebaseio.com",
+  projectId: "socialape-93bcf",
+  storageBucket: "socialape-93bcf.appspot.com",
+  messagingSenderId: "332500994209",
+  appId: "1:332500994209:web:21d33bea71c8cbcb6cc8e0",
+  measurementId: "G-2QNRZERNZP",
+};
 
-const express = require('express');
+const express = require("express");
 const app = express();
 
-app.get('/screams', (req, res) => {
-  admin
-    .firestore()
-    .collection("screams")
-    .orderBy('createdAt', 'desc')
+const firebase = require("firebase");
+const e = require("express");
+firebase.initializeApp(firebaseConfig);
+
+const db = admin.firestore();
+
+app.get("/screams", (req, res) => {
+  db.collection("screams")
+    .orderBy("createdAt", "desc")
     .get()
     .then((data) => {
       let screams = [];
@@ -23,7 +37,7 @@ app.get('/screams', (req, res) => {
           screamId: doc.id,
           body: doc.data().body,
           userHandle: doc.data().userHandle,
-          createdAt: doc.data().createdAt
+          createdAt: doc.data().createdAt,
         });
       });
       return res.json(screams);
@@ -31,25 +45,71 @@ app.get('/screams', (req, res) => {
     .catch((err) => console.error(err));
 });
 
-
-app.post('/scream', (req, res) => {
+app.post("/scream", (req, res) => {
   const newScream = {
     body: req.body.body,
     userHandle: req.body.userHandle,
-    createdAt: new Date().toISOString()
+    createdAt: new Date().toISOString(),
   };
 
-  admin.firestore()
-    .collection('screams')
+  db.collection("screams")
     .add(newScream)
-    .then(doc => {
-      res.json({message: `document ${doc.id} created successfully`});
+    .then((doc) => {
+      res.json({ message: `document ${doc.id} created successfully` });
     })
-    .catch(err => {
-      res.status(500).json({ error: `something went wrong`});
+    .catch((err) => {
+      res.status(500).json({ error: `something went wrong` });
       console.error(err);
-    })
+    });
 });
 
+// sign up route
+
+app.post("/signup", (req, res) => {
+  const newUser = {
+    email: req.body.email,
+    password: req.body.password,
+    confirmpPassword: req.body.confirmpPassword,
+    handle: req.body.handle,
+  };
+
+  // validate data
+  let token, userId;
+  db.doc(`/users/${newUser.handle}`).get()
+    .then(doc => {
+      if (doc.exists) {
+        return res.status(400).json({ handle: 'this handle is already taken'})
+      } else {
+        return firebase
+        .auth()
+        .createUserWithEmailAndPassword(newUser.email, newUser.password)
+      }
+    })
+    .then(data => {
+      userId = data.user.uid;
+      return data.user.getIdToken();
+    })
+    .then(idToken => {
+      token = idToken;
+      const userCredentials = {
+        handle: newUser.handle,
+        email: newUser.email,
+        createdAt: new Date().toISOString(),
+        userId
+      };
+      return db.doc(`/users/${newUser.handle}`).set(userCredentials);
+    })
+    .then(() => {
+      return res.status(201).json({ token });
+    })
+    .catch((err) => {
+      console.error(err);
+      if (err.code === 'auth/email-already-in-use') {
+        return res.status(400).json({ email: "email is already in use"});
+      } else{
+        return res.status(500).json({ error: err.code });
+      }
+    });
+});
 
 exports.api = functions.https.onRequest(app);
